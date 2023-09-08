@@ -25,14 +25,24 @@ class FloatingWidget(QWidget):
             pixmap = icon.pixmap(64, 64)  # Adjust the size as needed
             icon_label.setPixmap(pixmap)
 
-            # Determine the action type and action function based on the config
+            # Determine the action type and URL based on the config
             action_type = label_info["type"]
-            if action_type == "execute_system_code":
-                action = lambda exex=label_info["exex"]: self.execute_system_code(exex)
-            elif action_type == "open_url":
-                action = lambda url=label_info["url"]: self.open_website(url)
-            else:
-                action = lambda: None  # Default action if type is not recognized
+            url = label_info["url"]
+
+            def action():
+                if action_type == "open_url":
+                    try:
+                        QDesktopServices.openUrl(QUrl(url))
+                    except Exception as e:
+                        print(f"Error opening URL: {e}")
+                elif action_type == "execute_system_code":
+                    try:
+                        import subprocess
+                        subprocess.Popen(url)
+                    except Exception as e:
+                        print(f"Error executing code: {e}")
+                else:
+                    print(f"Unrecognized action type: {action_type}")
 
             # Connect the icon label to the corresponding action
             icon_label.mousePressEvent = lambda event, action=action: self.on_icon_click(event, action)
@@ -80,20 +90,6 @@ class FloatingWidget(QWidget):
         if event.button() == Qt.LeftButton:
             action()
 
-    def execute_system_code(self, code):
-        # Example: Open applications like Calculator or Notepad
-        try:
-            import subprocess
-            subprocess.Popen(code)
-        except Exception as e:
-            print(f"Error executing code: {e}")
-
-    def open_website(self, url):
-        # Example: Open a website in the default web browser
-        try:
-            QDesktopServices.openUrl(QUrl(url))
-        except Exception as e:
-            print(f"Error opening website: {e}")
 
 def main():
     with open("config.json", "r") as config_file:
