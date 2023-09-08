@@ -1,7 +1,7 @@
 {
-   "notepad":{"icon":"./icons/notepad.png","type":"execute_system_code","exec":"calc.exe"},
-    "cmd":{"icon":"./icons/cmd.png","type":"execute_system_code","exec":"cmd.exe"},
+   "notepad":{"icon":"./icons/notepad.png","type":"execute_system_code","exec":"notepad.exe"},
+    "cmd":{"icon":"./icons/spotify.png","type":"execute_system_code","exec":"spotify.exe"},
     "explorer":{"icon":"./icons/explorer.png","type":"execute_system_code","exec":"explorer.exe"},
-    "google":{"icon":"./icons/google.png","type":"open_url@default_browser","url":"https://www.google.com"},
+    "google":{"icon":"./icons/github.png","type":"open_url@brave","url":"https://www.github.com"},
     "youtube":{"icon":"./icons/youtube.png","type":"open_url@brave","url":"https://www.youtube.com"}
 }
